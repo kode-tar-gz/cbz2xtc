@@ -34,9 +34,14 @@ def find_png2xtc():
     Find png2xtc.py in common locations
     Returns path if found, None otherwise
     """
-    possible_paths = [
-        # Check environment variable first
-        Path(os.environ.get('PNG2XTC_PATH', '')),
+    possible_paths = []
+
+    # Only check env var if it is set and non-empty
+    env_path = os.environ.get('PNG2XTC_PATH')
+    if env_path:
+        possible_paths.append(Path(env_path))
+
+    possible_paths.extend([
         # Same directory as this script
         Path(__file__).parent / "png2xtc.py",
         # epub2xtc subfolder
@@ -50,13 +55,12 @@ def find_png2xtc():
         # Linux/Mac common locations
         Path.home() / ".local" / "bin" / "png2xtc.py",
         Path("/usr/local/bin/png2xtc.py"),
-    ]
-    
+    ])
+
     for path in possible_paths:
-        if path.exists():
-            # print("png2xtc exists at ",path) # debugging.
+        if path.is_file():  # Must be a file, not a folder
             return path
-    
+
     return None
 
 
