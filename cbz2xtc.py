@@ -438,7 +438,7 @@ def convert_png_folder_to_xtc(png_folder, output_file):
     try:
         # print("trying path:",str(png2xtc_path))
         result = subprocess.run(
-            ["python", str(png2xtc_path), str(png_folder), str(output_file)],
+            [sys.executable, str(png2xtc_path), str(png_folder), str(output_file)],
             # I had to use the following instead to make this work on my Mac.
             # ["python3", str(png2xtc_path) + "/png2xtc.py", str(png_folder), str(output_file)],
             capture_output=True,
